@@ -187,3 +187,178 @@ SET FirstName = (
     FROM Orders 
     WHERE Orders.CustomerID = Customers.CustomerID
 );
+
+--Task 3
+--q1
+SELECT o.OrderID, o.OrderDate, o.TotalAmount, 
+       c.FirstName, c.LastName, c.Email, c.Phone, c.Address
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID;
+
+--q2
+SELECT p.ProductName, SUM(od.Quantity * p.Price) AS TotalRevenue
+FROM Products p
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY p.ProductName
+ORDER BY TotalRevenue DESC;
+
+--q3
+SELECT DISTINCT c.FirstName, c.LastName, c.Email, c.Phone
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE o.OrderID IS NOT NULL;
+
+--q4
+SELECT TOP 1 p.ProductName, SUM(od.Quantity) AS TotalQuantityOrdered
+FROM Products p
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY p.ProductName
+ORDER BY TotalQuantityOrdered DESC;
+
+--q5
+SELECT ProductName, 
+       CASE 
+           WHEN Description LIKE '%laptop%' THEN 'Laptop'
+           WHEN Description LIKE '%smartphone%' THEN 'Smartphone'
+           WHEN Description LIKE '%tablet%' THEN 'Tablet'
+           WHEN Description LIKE '%smartwatch%' THEN 'Smartwatch'
+           WHEN Description LIKE '%earphone%' THEN 'Audio'
+           WHEN Description LIKE '%keyboard%' OR Description LIKE '%mouse%' THEN 'Computer Accessories'
+           WHEN Description LIKE '%monitor%' THEN 'Display'
+           WHEN Description LIKE '%speaker%' THEN 'Audio'
+           WHEN Description LIKE '%HDD%' THEN 'Storage'
+           ELSE 'Other Electronics'
+       END AS Category
+FROM Products;
+
+--q6
+SELECT c.FirstName, c.LastName, AVG(o.TotalAmount) AS AverageOrderValue
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.FirstName, c.LastName;
+
+--q7
+SELECT TOP 1 o.OrderID, c.FirstName, c.LastName, c.Email, o.TotalAmount AS TotalRevenue
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+ORDER BY o.TotalAmount DESC;
+
+--q8
+SELECT p.ProductName, COUNT(od.OrderDetailID) AS TimesOrdered
+FROM Products p
+LEFT JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY p.ProductName
+ORDER BY TimesOrdered DESC;
+
+--q9
+DECLARE @ProductName VARCHAR(100) = 'Laptop';
+
+SELECT DISTINCT c.FirstName, c.LastName, c.Email, c.Phone
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+JOIN OrderDetails od ON o.OrderID = od.OrderID
+JOIN Products p ON od.ProductID = p.ProductID
+WHERE p.ProductName = @ProductName;
+
+--q10
+DECLARE @StartDate DATETIME = '2025-03-01';
+DECLARE @EndDate DATETIME = '2025-03-10';
+
+SELECT SUM(o.TotalAmount) AS TotalRevenue
+FROM Orders o
+WHERE o.OrderDate BETWEEN @StartDate AND @EndDate;
+
+Task 4
+
+--q1
+SELECT c.FirstName, c.LastName, c.Email, c.Phone
+FROM Customers c
+WHERE c.CustomerID NOT IN (
+    SELECT DISTINCT CustomerID 
+    FROM Orders
+);
+
+--q2
+SELECT COUNT(*) AS TotalProductsAvailable
+FROM Products;
+
+--q3
+SELECT SUM(TotalAmount) AS TotalRevenue
+FROM Orders;
+
+--q4
+DECLARE @CategoryName VARCHAR(50) = 'Laptop';
+SELECT AVG(od.Quantity) AS AverageQuantityOrdered
+FROM OrderDetails od
+JOIN Products p ON od.ProductID = p.ProductID
+WHERE p.ProductName LIKE '%' + @CategoryName + '%';
+
+--q5
+DECLARE @CustomerID INT = 1; -- Example parameter
+
+SELECT SUM(o.TotalAmount) AS TotalCustomerRevenue
+FROM Orders o
+WHERE o.CustomerID = @CustomerID;
+
+--q6
+SELECT TOP 1 c.FirstName, c.LastName, COUNT(o.OrderID) AS NumberOfOrders
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.FirstName, c.LastName
+ORDER BY NumberOfOrders DESC;
+
+--q7
+SELECT TOP 1 
+    CASE 
+        WHEN p.ProductName LIKE '%laptop%' THEN 'Laptop'
+        WHEN p.ProductName LIKE '%smartphone%' THEN 'Smartphone'
+        WHEN p.ProductName LIKE '%tablet%' THEN 'Tablet'
+        WHEN p.ProductName LIKE '%smartwatch%' THEN 'Smartwatch'
+        WHEN p.ProductName LIKE '%earphone%' THEN 'Audio'
+        WHEN p.ProductName LIKE '%keyboard%' OR p.ProductName LIKE '%mouse%' THEN 'Computer Accessories'
+        WHEN p.ProductName LIKE '%monitor%' THEN 'Display'
+        WHEN p.ProductName LIKE '%speaker%' THEN 'Audio'
+        WHEN p.ProductName LIKE '%HDD%' THEN 'Storage'
+        ELSE 'Other Electronics'
+    END AS Category,
+    SUM(od.Quantity) AS TotalQuantityOrdered
+FROM Products p
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY 
+    CASE 
+        WHEN p.ProductName LIKE '%laptop%' THEN 'Laptop'
+        WHEN p.ProductName LIKE '%smartphone%' THEN 'Smartphone'
+        WHEN p.ProductName LIKE '%tablet%' THEN 'Tablet'
+        WHEN p.ProductName LIKE '%smartwatch%' THEN 'Smartwatch'
+        WHEN p.ProductName LIKE '%earphone%' THEN 'Audio'
+        WHEN p.ProductName LIKE '%keyboard%' OR p.ProductName LIKE '%mouse%' THEN 'Computer Accessories'
+        WHEN p.ProductName LIKE '%monitor%' THEN 'Display'
+        WHEN p.ProductName LIKE '%speaker%' THEN 'Audio'
+        WHEN p.ProductName LIKE '%HDD%' THEN 'Storage'
+        ELSE 'Other Electronics'
+    END
+ORDER BY TotalQuantityOrdered DESC;
+
+--q8
+SELECT TOP 1 c.FirstName, c.LastName, SUM(o.TotalAmount) AS TotalSpending
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE o.OrderID IN (
+    SELECT od.OrderID
+    FROM OrderDetails od
+    JOIN Products p ON od.ProductID = p.ProductID
+    WHERE p.Description LIKE '%electronic%' OR p.ProductName LIKE '%electronic%'
+)
+GROUP BY c.FirstName, c.LastName
+ORDER BY TotalSpending DESC;
+
+--q9
+SELECT AVG(TotalAmount) AS AverageOrderValue
+FROM Orders;
+
+--q10
+SELECT c.FirstName, c.LastName, COUNT(o.OrderID) AS OrderCount
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.FirstName, c.LastName
+ORDER BY OrderCount DESC;
