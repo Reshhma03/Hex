@@ -1,8 +1,8 @@
--- First create the database and use it
+
 CREATE DATABASE ProjectManage;
 USE ProjectManage;
 
--- Create Project Table
+
 CREATE TABLE Project
 (Id INT Primary Key,
 ProjectName VARCHAR(50) NOT NULL,
@@ -11,7 +11,7 @@ Start_date DATE,
 Status VARCHAR(50) NOT NULL,
 CHECK (Status IN('started','dev','build','test','deployed')));
 
--- Create Employee Table
+
 CREATE TABLE Employee
 (id INT Primary Key,
 name VARCHAR(50) NOT NULL,
@@ -21,7 +21,7 @@ Salary DECIMAL(10,2),
 Project_id INT,
 FOREIGN KEY(Project_id) REFERENCES Project(Id) ON DELETE SET NULL);
 
--- Create Task Table
+
 CREATE TABLE Task
 (task_id INT Primary Key,
 task_name VARCHAR(50) NOT NULL,
@@ -32,7 +32,7 @@ CHECK (Status IN('Assigned','Started','Completed')),
 FOREIGN KEY(project_id) REFERENCES Project(Id) ON DELETE CASCADE,
 FOREIGN KEY(employee_id) REFERENCES Employee(id) ON DELETE SET NULL);
 
--- Insert Project Table Values
+
 INSERT INTO Project VALUES
 (1,'E-Commerce Website','Build an online shopping platform','2025-02-20','started'),
 (2,'Conversational Chatbot','Build an AI based troubleshooting bot','2025-02-10','build'),
@@ -43,7 +43,7 @@ INSERT INTO Project VALUES
 (7,'Attendnece Tracker','Manage students attendence','2024-12-05','deployed'),
 (8,'Hospital Management System','Plan and manage patients','2024-12-20','started');
 
--- Insert Employee Table values
+
 INSERT INTO Employee VALUES
 (2,'Rahul','Software Developer','Male',55000.00,1),
 (4,'Meera','QA Tester','Female',48000.00,2),
@@ -54,7 +54,7 @@ INSERT INTO Employee VALUES
 (14,'Arjun','Data Analyst','Male',60000.00,7),
 (16,'Pradeep','Database Administrator','Male',65000.00,8);
 
--- Insert Task Table values
+
 INSERT INTO Task VALUES
 (5,'Set up product listings',1,2,'Assigned'),
 (10,'Develop chatbot UI',2,4,'Started'),
@@ -65,5 +65,5 @@ INSERT INTO Task VALUES
 (35,'Generate attendence reports',7,14,'Completed'),
 (40,'Optimize database for patient records',8,16,'Started');
 
--- Now you can query the Task table
+
 SELECT * FROM Task;
