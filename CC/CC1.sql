@@ -5,6 +5,8 @@ CompanyID INT IDENTITY(1,1) PRIMARY KEY,
     CompanyName NVARCHAR(255) NOT NULL,
     Location NVARCHAR(255) NOT NULL
 );
+
+
 CREATE TABLE Jobs (
     JobID INT IDENTITY(1,1) PRIMARY KEY,
     CompanyID INT,
@@ -16,6 +18,8 @@ CREATE TABLE Jobs (
     PostedDate DATETIME,
     FOREIGN KEY (CompanyID) REFERENCES Companies(CompanyID)
 );
+
+
 CREATE TABLE Applicants (
     ApplicantID INT IDENTITY(1,1) PRIMARY KEY,
     FirstName NVARCHAR(255) NOT NULL,
@@ -24,6 +28,8 @@ CREATE TABLE Applicants (
     Phone NVARCHAR(15),
     Resume NVARCHAR(MAX)
 );
+
+
 CREATE TABLE Applications (
     ApplicationID INT IDENTITY(1,1) PRIMARY KEY,
     JobID INT,
@@ -33,6 +39,8 @@ CREATE TABLE Applications (
     FOREIGN KEY (JobID) REFERENCES Jobs(JobID),
     FOREIGN KEY (ApplicantID) REFERENCES Applicants(ApplicantID)
 );
+
+--q5
 SELECT 
     J.JobTitle, 
     COUNT(A.ApplicationID) AS ApplicationCount
@@ -52,7 +60,7 @@ FROM
 JOIN 
     Companies C ON J.CompanyID = C.CompanyID
 WHERE 
-    J.Salary BETWEEN 60000 AND 80000; -- Replace with parameters
+    J.Salary BETWEEN 60000 AND 80000; 
 	SELECT 
     J.JobTitle, 
     C.CompanyName, 
@@ -64,7 +72,7 @@ JOIN
 JOIN 
     Companies C ON J.CompanyID = C.CompanyID
 WHERE 
-    A.ApplicantID = 1; -- Replace with parameter
+    A.ApplicantID = 1; 
 	SELECT 
     AVG(Salary) AS AverageSalary
 FROM 
@@ -95,7 +103,7 @@ JOIN
     Companies C ON J.CompanyID = C.CompanyID
 WHERE 
     C.Location = 'CityX'
-    AND AP.Resume LIKE '%3 years%'; -- Replace with actual experience filter
+    AND AP.Resume LIKE '%3 years%'; 
 	SELECT DISTINCT 
     JobTitle
 FROM 
@@ -183,5 +191,5 @@ JOIN
 JOIN 
     Companies C ON J.CompanyID = C.CompanyID
 WHERE 
-    AP.Location = 'Chennai' -- Replace with parameter
+    AP.Location = 'Chennai' 
     AND AP.Resume LIKE '%2 years%';
