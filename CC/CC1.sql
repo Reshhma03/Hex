@@ -1,4 +1,4 @@
---CREATE DATABASE CareerHub;
+
 USE CareerHub;
 CREATE TABLE  Companies (
 CompanyID INT IDENTITY(1,1) PRIMARY KEY,
@@ -40,7 +40,7 @@ CREATE TABLE Applications (
     FOREIGN KEY (ApplicantID) REFERENCES Applicants(ApplicantID)
 );
 
---q5
+
 SELECT 
     J.JobTitle, 
     COUNT(A.ApplicationID) AS ApplicationCount
