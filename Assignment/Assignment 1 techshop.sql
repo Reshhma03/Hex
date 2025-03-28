@@ -225,7 +225,7 @@ ORDER BY TotalQuantityOrdered DESC;
 --q5 retrieve a list of electronic gadgets along with their corresponding categories. 
 SELECT p.ProductName,p.Description
 FROM Products p
-WHERE p.ProductName LIKEÂ '%Gadget%';
+WHERE p.ProductName LIKE '%Gadget%';
 
 --q6 calculate the average order value
 SELECT c.FirstName, c.LastName, AVG(o.TotalAmount) AS AverageOrderValue
@@ -313,7 +313,7 @@ ORDER BY NumberOfOrders DESC;
 SELECT TOP 1 p.ProductName, SUM(od.Quantity) AS TotalQuantityOrdered
 FROM OrderDetails od, Products p WHERE od.ProductID = p.ProductID
 GROUP BY p.ProductName
-ORDER BY TotalQuantityOrderedÂ DESC;
+ORDER BY TotalQuantityOrdered DESC;
 Go
 
 --q8 to find the customer who has spent the most money on electronic gadgets. List their name and total spending
