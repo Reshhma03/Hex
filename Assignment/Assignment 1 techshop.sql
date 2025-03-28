@@ -54,16 +54,16 @@ GO
 GO
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, Address)
 VALUES 
-(1, 'Alice', 'Green', 'alice.green@email.com', '555-1234', '12 Forest Road'),
-(2, 'Ben', 'White', 'ben.white@email.com', '555-5678', '34 Riverbank Ave'),
-(3, 'Catherine', 'Brown', 'catherine.brown@email.com', '555-8765', '56 Ocean View Dr'),
-(4, 'David', 'Black', 'david.black@email.com', '555-4321', '78 Mountain Ridge Blvd'),
-(5, 'Eva', 'Blue', 'eva.blue@email.com', '555-6789', '90 Sunset Hill St'),
-(6, 'Frank', 'Silver', 'frank.silver@email.com', '555-9876', '123 Cedar Grove'),
-(7, 'Grace', 'Gold', 'grace.gold@email.com', '555-2345', '45 Lakeview Dr'),
-(8, 'Hannah', 'Yellow', 'hannah.yellow@email.com', '555-3456', '67 Pine Crest Rd'),
-(9, 'Ian', 'Red', 'ian.red@email.com', '555-5679', '89 Birchwood Ln'),
-(10, 'Jack', 'Purple', 'jack.purple@email.com', '555-6780', '101 Maple Hollow');
+(1, Ravi', 'Sharma', 'ravi.sharma@email.com', '555-1234', '12 MG Road, Mumbai'),
+(2, 'Diya', 'Patel', 'diya.patel@email.com', '555-5678', '34 Brigade Road, Bangalore'),
+(3, 'Vihaan', 'Singh', 'vihaan.singh@email.com', '555-8765', '56 Connaught Place, Delhi'),
+(4, 'Ananya', 'Gupta', 'ananya.gupta@email.com', '555-4321', '78 Park Street, Kolkata'),
+(5, 'Advait', 'Joshi', 'advait.joshi@email.com', '555-6789', '90 Jubilee Hills, Hyderabad'),
+(6, 'Ishaan', 'Malhotra', 'ishaan.malhotra@email.com', '555-9876', '123 Koregaon Park, Pune'),
+(7, 'Myra', 'Reddy', 'myra.reddy@email.com', '555-2345', '45 Boat Club Road, Chennai'),
+(8, 'Kavya', 'Iyer', 'kavya.iyer@email.com', '555-3456', '67 Banjara Hills, Hyderabad'),
+(9, 'Arjun', 'Mehta', 'arjun.mehta@email.com', '555-5679', '89 Church Street, Bangalore'),
+(10, 'Anika', 'Choudhary', 'anika.choudhary@email.com', '555-6780', '101 Marine Drive, Mumbai');
 
 GO
 
@@ -225,7 +225,7 @@ ORDER BY TotalQuantityOrdered DESC;
 --q5 retrieve a list of electronic gadgets along with their corresponding categories. 
 SELECT p.ProductName,p.Description
 FROM Products p
-WHERE p.ProductName LIKE '%Gadget%';
+WHERE p.ProductName LIKEÂ '%Gadget%';
 
 --q6 calculate the average order value
 SELECT c.FirstName, c.LastName, AVG(o.TotalAmount) AS AverageOrderValue
@@ -313,7 +313,7 @@ ORDER BY NumberOfOrders DESC;
 SELECT TOP 1 p.ProductName, SUM(od.Quantity) AS TotalQuantityOrdered
 FROM OrderDetails od, Products p WHERE od.ProductID = p.ProductID
 GROUP BY p.ProductName
-ORDER BY TotalQuantityOrdered DESC;
+ORDER BY TotalQuantityOrderedÂ DESC;
 Go
 
 --q8 to find the customer who has spent the most money on electronic gadgets. List their name and total spending
