@@ -222,7 +222,7 @@ FROM Shelters s cross JOIN AdoptionEvents e; --Every shelter is paired with ever
 
 --20) Determine the shelter that has the highest number of adopted pets.
 
-SELECT TOP 1 s.Name AS ShelterName, COUNT(p.PetID) AS AdoptedPetsCount
+SELECT  s.Name AS ShelterName, COUNT(p.PetID) AS AdoptedPetsCount
 FROM Shelters s
 JOIN Pets p ON s.ShelterID = p.PetID --inner join
 WHERE p.AvailableForAdoption = 0 --Filters out only the pets that have been adopted
